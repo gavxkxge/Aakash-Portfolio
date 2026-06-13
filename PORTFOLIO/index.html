@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aakash Dubey | Portfolio</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & VARS (MODERN FUTURISTIC DARK THEME) --- */
+        :root {
+            --bg-color: #000000; 
+            
+            
+            /* MODERN GLASS SETTINGS */
+            --glass-bg: linear-gradient(135deg, rgba(65, 65, 65, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+            --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.25); 
+            --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.5); 
+            --glass-blur: blur(12px);
+
+            /* INNER CARDS */
+            --inner-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.0) 100%);
+            --inner-card-border: 1px solid rgba(255, 255, 255, 0.08);
+            --inner-glass-blur: blur(8px);
+            --inner-card-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+            /* Text Colors */
+            --text-main: #ffffff;     
+            --text-muted: #9aa0a6;    
+            --accent-green: #ffffffc4; 
+            
+            /* Buttons */
+            --btn-bg: #ffffff;        
+            --btn-text: #16181a;
+            
+            /* Logo Gradient */
+            --logo-grad-1: #ffffff;
+            --logo-grad-2: #888888;
+
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+        }
+
+        /* --- LIGHT THEME OVERRIDES (Silver Glass with Black Text) --- */
+        .light-theme {
+            --bg-color: #818181b4; 
+            
+            /* Light glass */
+            --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 100%); 
+            --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+            --glass-highlight: inset 0 1px 2px rgba(255, 255, 255, 1); 
+            --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.1); 
+            
+            /* Inner Cards */
+            --inner-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+            --inner-card-border: 1px solid rgba(255, 255, 255, 0.6);
+            --inner-card-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            
+            /* Text Colors (Black) */
+            --text-main: #111827;     
+            --text-muted: #4b5563; 
+            --accent-green: #000000; 
+            
+            /* Buttons */
+            --btn-bg: #111827;        
+            --btn-text: #ffffff;
+            
+            /* Logo Gradient */
+            --logo-grad-1: #111827;
+            --logo-grad-2: #4b5563;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: rgba(150,150,150,0.5); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
+
+        /* --- 0. PRELOADER --- */
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
+        .preloader.slide-up { transform: translateY(-100%); }
+        .loader-logo { font-family: var(--font-mono); font-size: 2rem; font-weight: 800; color: var(--text-main); opacity: 0; animation: pulseText 2s ease forwards; }
+        .loader-line { width: 0%; height: 2px; background-color: var(--accent-green); margin-top: 20px; animation: fillLine 1.5s ease-in-out forwards; }
+        @keyframes pulseText { 0% { opacity: 0; transform: translateY(10px); } 50% { opacity: 1; transform: translateY(0); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes fillLine { 0% { width: 0%; } 100% { width: 150px; } }
+        .reveal-content { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal-content.active { opacity: 1; transform: translateY(0); }
+
+        /* --- 1. VOLUMETRIC LIGHT RAYS --- */
+        .light-rays { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: -2; pointer-events: none; }
+        .ray {
+            position: absolute; top: -10%; left: -10%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.03) 40%, transparent 80%);
+            transform-origin: top left; filter: blur(25px); transition: opacity 0.4s ease, background 0.4s ease;
+        }
+        .ray-1 { width: 200vw; height: 120px; transform: rotate(35deg) translateY(0px); opacity: 1; }
+        .ray-2 { width: 200vw; height: 40px; transform: rotate(42deg) translateY(120px); filter: blur(15px); opacity: 0.9; }
+        .ray-3 { width: 200vw; height: 200px; transform: rotate(28deg) translateY(-200px); opacity: 0.6; }
+
+        .light-theme .ray {
+            background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 40%, transparent 80%);
+            opacity: 1;
+        }
+
+        /* --- 2. AMBIENT GLOW --- */
+        .ambient-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -3; pointer-events: none; }
+        .spotlight { position: absolute; top: -10%; left: 30%; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 60%); filter: blur(80px); animation: pulseGlow 10s infinite alternate; transition: background 0.4s ease; }
+        .light-theme .spotlight { background: radial-gradient(circle, rgba(0, 0, 0, 0.5), transparent 60%); }
+        @keyframes pulseGlow { 0% { opacity: 0.5; transform: scale(1); } 100% { opacity: 0.8; transform: scale(1.1); } }
+
+        /* --- 2.5 FLOATING TECH ICONS (Black & White) --- */
+        .floating-icons {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            overflow: hidden; z-index: -2; pointer-events: none;
+        }
+        
+        .float-icon {
+            position: absolute;
+            /* Faint white for dark mode */
+            color: rgba(255, 255, 255, 0.04); 
+            transition: color 0.4s ease;
+        }
+
+        .light-theme .float-icon {
+            /* Faint black for light mode */
+            color: rgba(0, 0, 0, 0.04); 
+        }
+
+        /* Positioning and sizing the icons */
+        .icon-1 { top: 15%; left: 10%; font-size: 5rem; animation: floatAnim 25s infinite linear; }
+        .icon-2 { top: 60%; left: 85%; font-size: 8rem; animation: floatAnim 35s infinite linear reverse; }
+        .icon-3 { top: 80%; left: 15%; font-size: 4.5rem; animation: floatAnim 20s infinite linear; }
+        .icon-4 { top: 20%; left: 75%; font-size: 6rem; animation: floatAnim 28s infinite linear reverse; }
+        .icon-5 { top: 45%; left: 45%; font-size: 7.5rem; animation: floatAnim 40s infinite linear; }
+        .icon-6 { top: 85%; left: 55%; font-size: 5.5rem; animation: floatAnim 22s infinite linear reverse; }
+        .icon-7 { top: 5%; left: 45%; font-size: 4rem; animation: floatAnim 30s infinite linear; }
+        .icon-8 { top: 35%; left: 5%; font-size: 6.5rem; animation: floatAnim 32s infinite linear reverse; }
+
+        @keyframes floatAnim {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(40px, -50px) rotate(30deg); }
+            66% { transform: translate(-20px, 30px) rotate(-15deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* --- 3. CANVAS --- */
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* --- 4. GLASS CONTAINER --- */
+        .glass-frame {
+            max-width: 1000px;
+            margin: 80px auto;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow), var(--glass-highlight);
+            border-radius: 24px; 
+            padding: 60px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        /* --- UTILITIES & BUTTONS --- */
+        .btn { display: inline-block; padding: 14px 32px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; margin-right: 10px; margin-bottom: 10px; position: relative; overflow: hidden; }
+        
+        .btn-primary { background-color: var(--accent-green); color: #ffffff; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+        
+        .btn-outline { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            color: var(--text-main); 
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: var(--inner-glass-blur);
+            -webkit-backdrop-filter: var(--inner-glass-blur);
+            box-shadow: inset 0 2px 2px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-outline:hover { 
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.4), 0 8px 20px rgba(0,0,0,0.2); 
+            transform: translateY(-2px);
+            color: var(--accent-green);
+        }
+        
+        .logo { font-family: var(--font-mono); font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; background: linear-gradient(90deg, var(--logo-grad-1), var(--logo-grad-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 1px solid var(--inner-card-border); padding-bottom: 10px; }
+        .section-title { font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin: 0; position: relative; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 3px; background: var(--accent-green); margin-top: 10px; border-radius: 2px; }
+        .see-all { font-size: 0.9rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .see-all:hover { color: var(--accent-green); }
+        
+        nav { padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; border-bottom: 1px solid var(--inner-card-border); position: relative; }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 25px; font-weight: 600; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-main); }
+        
+        .hero { padding: 40px 0 80px 0; text-align: left; }
+        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; letter-spacing: -2px; font-weight: 800; color: var(--text-main); }
+        .hero h2 { font-size: 1.5rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 500; }
+        .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; border: 1px solid var(--accent-green); padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; color: var(--accent-green); font-weight: 700; background: rgba(34, 197, 94, 0.05); backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur); }
+
+        /* PROJECTS */
+        .projects-stack { display: flex; flex-direction: column; gap: 15px; }
+        .project-card { 
+            display: flex; align-items: flex-start; 
+            background: var(--inner-card-bg); border: var(--inner-card-border); 
+            border-radius: 16px; padding: 25px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; text-decoration: none; color: inherit; transform-style: preserve-3d; 
+            backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), var(--inner-card-shadow);
+        }
+        .project-card:hover { border-color: var(--accent-green); transform: translateY(-3px); box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 15px 35px rgba(0,0,0,0.2); }
+        
+        .project-icon-box { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-right: 20px; flex-shrink: 0; color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); box-shadow: inset 0 2px 4px rgba(255,255,255,0.1); transition: all 0.3s; }
+        .project-card:hover .project-icon-box { color: var(--accent-green); border-color: var(--accent-green); }
+        
+        .project-content { flex-grow: 1; }
+        .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main); transition: color 0.3s;}
+        .project-card:hover .project-title { color: var(--accent-green); }
+        .project-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5; }
+        .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .project-tag { font-size: 0.7rem; padding: 4px 12px; background: rgba(255,255,255,0.05); border-radius: 20px; color: var(--text-main); font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
+        .project-arrow { font-size: 1.2rem; color: var(--text-muted); margin-left: 20px; align-self: center; transition: transform 0.3s; }
+        .project-card:hover .project-arrow { color: var(--accent-green); transform: translateX(5px); }
+
+        /* SKILLS GRID */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; margin-top: 20px; }
+        .tech-card { background: var(--inner-card-bg); border: var(--inner-card-border); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s; text-decoration: none; cursor: default; transform-style: preserve-3d; backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), var(--inner-card-shadow); }
+        .tech-card:hover { border-color: var(--accent-green); transform: translateY(-3px); box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 12px 30px rgba(0,0,0,0.2); }
+        .tech-icon { font-size: 2rem; margin-bottom: 15px; color: var(--text-muted); transition: color 0.3s; }
+        .tech-card:hover .tech-icon { color: var(--accent-green); }
+        .tech-name { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); transition: color 0.3s; }
+        .tech-card:hover .tech-name { color: var(--accent-green); }
+
+        /* CERTIFICATES */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .cert-card { background: var(--inner-card-bg); border-radius: 16px; padding: 20px; text-align: center; transition: all 0.3s; border: var(--inner-card-border); transform-style: preserve-3d; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 18px; backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), var(--inner-card-shadow); }
+        .cert-card:hover { transform: translateY(-5px); border-color: var(--accent-green); box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 15px 35px rgba(0,0,0,0.2); }
+        .cert-thumb { width: 100%; border-radius: 16px; object-fit: cover; max-height: 180px; border: 1px solid rgba(255,255,255,0.12); box-shadow: inset 0 1px 2px rgba(255,255,255,0.08); }
+        .cert-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main); transition: color 0.3s; }
+        .cert-card:hover .cert-icon { color: var(--accent-green); }
+        .cert-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: var(--text-main); }
+        .cert-issuer { font-size: 0.9rem; color: var(--text-muted); }
+
+        .cert-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.85); z-index: 2000; padding: 24px; }
+        .cert-modal.active { display: flex; }
+        .cert-modal-inner { position: relative; width: 100%; max-width: 1000px; max-height: 90vh; border-radius: 22px; overflow: hidden; background: rgba(10, 10, 10, 0.95); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); }
+        .cert-modal img { display: block; width: 100%; height: auto; max-height: 90vh; object-fit: contain; }
+        .cert-modal-close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.35); background: rgba(0,0,0,0.6); color: #ffffff; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+        .cert-modal-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%); color: #ffffff; font-size: 0.95rem; }
+
+        /* ABOUT & CONTACT */
+        .about-section { padding: 60px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .inner-card { background: var(--inner-card-bg); border-radius: 16px; padding: 30px; border: var(--inner-card-border); transition: transform 0.2s; transform-style: preserve-3d; backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), var(--inner-card-shadow); }
+        .inner-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3); }
+        .detail-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--inner-card-border); padding: 14px 0; font-size: 0.95rem; }
+        .detail-row span:first-child { font-weight: 600; color: var(--text-main); opacity: 0.8; } 
+        .detail-row span:last-child { color: var(--text-muted); }
+        
+        .contact-section { padding: 60px 0; max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 25px; }
+        .form-label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); }
+        .form-input, .form-textarea { width: 100%; padding: 16px; border: var(--inner-card-border); border-radius: 14px; font-family: var(--font-main); font-size: 1rem; background: var(--inner-card-bg); color: var(--text-main); transition: all 0.3s; backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur); box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
+        .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); opacity: 0.6; }
+        .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--accent-green); box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.1); }
+        .form-textarea { height: 150px; resize: vertical; }
+
+        /* --- EXTREME GLASS THEME TOGGLE --- */
+        .theme-toggle-container { display: flex; align-items: center; margin-left: 20px; }
+        .theme-toggle { position: relative; display: inline-block; width: 60px; height: 30px; }
+        .theme-toggle input { opacity: 0; width: 0; height: 0; }
+        
+        .slider { 
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); 
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: var(--inner-glass-blur); -webkit-backdrop-filter: var(--inner-glass-blur);
+            transition: .4s; border-radius: 34px; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .slider:before { 
+            position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.05)); 
+            border: 1px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(5px);
+            transition: .4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; 
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), 0 2px 6px rgba(0,0,0,0.3); 
+        }
+        
+        input:checked + .slider { border-color: var(--accent-green); }
+        input:checked + .slider:before { transform: translateX(30px); background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.3)); border-color: white; }
+
+        /* --- MOBILE NAV --- */
+        .mobile-nav { display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-radius: 50px; border: var(--glass-border); z-index: 1000; justify-content: space-around; padding: 15px; box-shadow: var(--glass-shadow), inset 0 1px 1px rgba(255,255,255,0.2); transition: background 0.4s; }
+        .mobile-nav a { color: var(--text-muted); font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent-green); }
+
+        @media (max-width: 768px) {
+            .glass-frame { margin: 0; padding: 40px 20px 100px 20px; border-radius: 0; border: none; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+            .hero h1 { font-size: 3rem; }
+            .about-section { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+            .nav-links { display: none; }
+            .mobile-nav { display: flex; }
+            .theme-toggle-container { margin-left: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="preloader">
+        <div class="loader-logo">&lt;Aakash/&gt;</div>
+        <div class="loader-line"></div>
+    </div>
+
+    <div class="light-rays">
+        <div class="ray ray-1"></div>
+        <div class="ray ray-2"></div>
+        <div class="ray ray-3"></div>
+    </div>
+
+    <div class="ambient-glow">
+        <div class="spotlight"></div>
+    </div>
+
+    <div class="floating-icons">
+        <i class="fa-brands fa-python float-icon icon-1"></i>
+        <i class="fa-brands fa-js float-icon icon-2"></i>
+        <i class="fa-brands fa-java float-icon icon-3"></i>
+        <i class="fa-brands fa-docker float-icon icon-4"></i>
+        <i class="fa-brands fa-aws float-icon icon-5"></i>
+        <i class="fa-brands fa-linux float-icon icon-6"></i>
+        <i class="fa-brands fa-github float-icon icon-7"></i>
+        <i class="fa-brands fa-node-js float-icon icon-8"></i>
+    </div>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <div class="glass-frame reveal-content">
+
+        <nav>
+            <div class="logo">&lt;Aakash/&gt;</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
+                
+                <div class="theme-toggle-container">
+                    <label class="theme-toggle">
+                        <input type="checkbox" id="theme-switch" aria-label="Toggle Dark/Light Mode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </nav>
+
+        <section id="home" class="hero">
+            <span class="tag">Welcome</span>
+            <h1>Hi, I'm<br>Aakash Dubey</h1>
+            <h2>Student & Aspiring Software Engineer</h2>
+            <div style="margin-top: 30px;">
+                <a href="mailto:aakash.dubey.prof@outlook.com" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Email</a>
+                <a href="https://github.com/yourusername" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" class="btn btn-outline"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="./Aakash%20Resume.pages" download class="btn btn-outline"><i class="fa-solid fa-download"></i> CV</a>
+            </div>
+        </section>
+
+        <section id="projects" style="padding: 60px 0;">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <a href="https://drive.google.com/file/d/1SewqjHYQw08v_pXR6QFCt8n2EfTJdDGu/view?usp=drive_link" target="_blank" class="see-all">Drive-></a>
+            </div>
+            <div class="projects-stack">
+                <a href="#" class="project-card">
+                    <div class="project-icon-box">🗃️</div>
+                    <div class="project-content">
+                        <div class="project-title">Faculty Course Management System</div>
+                        <div class="project-desc">A comprehensive system for managing faculty courses and student enrollments.</div>
+                        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Django</span><span class="project-tag">Database</span></div>
+                    </div>
+                    <div class="project-arrow">→</div>
+                </a>
+                <a href="#" class="project-card">
+                    <div class="project-icon-box">cmd_</div>
+                    <div class="project-content">
+                        <div class="project-title">Personal PortFolio</div>
+                        <div class="project-desc">A responsive portfolio website showcasing my projects and skills.</div>
+                        <div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JavaScript</span></div>
+                    </div>
+                    <div class="project-arrow">→</div>
+                </a>
+                
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div>
+                <h2 class="section-title">About Me</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem;">
+                    I am a BCA student at <strong>Amity University, Raipur</strong>. I am a passionate and motivated student with a strong interest in software engineering.
+                </p>
+            </div>
+            <div class="inner-card">
+                <div class="detail-row"><span>Age</span><span>19</span></div>
+                <div class="detail-row"><span>Course</span><span>BCA</span></div>
+                <div class="detail-row"><span>Location</span><span>Raipur, CG</span></div>
+                <div class="detail-row" style="border-bottom: none;"><span>Phone</span><span>+91 9131190709</span></div>
+            </div>
+        </section>
+
+        <section id="skills" style="padding: 60px 0;">
+            <div class="section-header">
+                <h2 class="section-title">Tech Stack</h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card"><i class="fa-brands fa-python tech-icon"></i><span class="tech-name">Python</span></div>
+                <div class="tech-card"><i class="fa-brands fa-js tech-icon"></i><span class="tech-name">JavaScript</span></div>
+                <div class="tech-card"><i class="fa-brands fa-java tech-icon"></i><span class="tech-name">Java</span></div>
+                <div class="tech-card"><i class="fa-brands fa-c++ tech-icon"></i><span class="tech-name">C++</span></div>
+                <div class="tech-card"><i class="fa-brands fa-c tech-icon"></i><span class="tech-name"></span></div>
+                <div class="tech-card"><i class="fa-brands fa-linux tech-icon"></i><span class="tech-name">Linux</span></div>
+                <div class="tech-card"><i class="fa-brands fa-git-alt tech-icon"></i><span class="tech-name">Git</span></div>
+                <div class="tech-card"><i class="fa-brands fa-github tech-icon"></i><span class="tech-name">GitHub</span></div>
+                <div class="tech-card"><i class="fa-brands fa-node-js tech-icon"></i><span class="tech-name">Node.js</span></div>
+                <div class="tech-card"><i class="fa-solid fa-database tech-icon"></i><span class="tech-name">MySQL</span></div>
+                <div class="tech-card"><i class="fa-solid fa-terminal tech-icon"></i><span class="tech-name">Kali Linux</span></div>
+            </div>
+        </section>
+
+        <section id="certificates" style="padding: 60px 0;">
+            <div class="section-header">
+                <h2 class="section-title">Certifications</h2>
+            </div>
+            <div class="cert-grid">
+                <a href="#" class="cert-card" title="Android App Development with Core JAVA Certificate" data-image="./assets/certificate%202.jpeg" data-title="Android App Development with Core JAVA Certificate">
+                    <i class="fa-solid fa-certificate cert-icon"></i>
+                    <div class="cert-title">Android App Development with Core JAVA Certificate</div>
+                    <div class="cert-issuer">NetCamp Solutions</div>
+                </a>
+                <a href="#" class="cert-card" title="Summer Internship Certificate" data-image="./assets/certificate%204.jpeg" data-title="Summer Internship Certificate">
+                    <i class="fa-solid fa-certificate cert-icon"></i>
+                    <div class="cert-title">Summer Internship Certificate</div>
+                    <div class="cert-issuer">NetCamp Solutions</div>
+                </a>
+                <a href="#" class="cert-card" title="Industrial Training Certificate" data-image="./assets/certificate.jpeg" data-title="Industrial Training Certificate">
+                    <i class="fa-solid fa-certificate cert-icon"></i>
+                    <div class="cert-title">Industrial Training Certificate</div>
+                    <div class="cert-issuer">NetCamp Solutions</div>
+                </a>
+                <a href="#" class="cert-card" title="Network Management and Web Development with Ethical Hacking Certificate" data-image="./assets/certificate%203.jpeg" data-title="Network Management and Web Development with Ethical Hacking Certificate">
+                    <i class="fa-solid fa-certificate cert-icon"></i>
+                    <div class="cert-title">Network Management and Web Development with Ethical Hacking Certificate</div>
+                    <div class="cert-issuer">NetCamp Solutions</div>
+                </a>
+                <a href="#" class="cert-card" title="Programming Fundamentals in Python Certificate" data-image="./assets/certificate%207.png" data-title="Programming Fundamentals in Python Certificate">
+                    <i class="fa-solid fa-certificate cert-icon"></i>
+                    <div class="cert-title">Programming Fundamentals in Python Certificate</div>
+                    <div class="cert-issuer">Infosys | Springboard</div>
+                </a>
+                
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Contact Me</h2>
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group"><label class="form-label">Name</label><input type="text" name="name" class="form-input" placeholder="Your Name" required></div>
+                <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="Your Email" required></div>
+                <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" placeholder="How can I help you?" required></textarea></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </section>
+
+        <footer style="text-align: center; padding-top: 40px; color: var(--text-muted); border-top: 1px solid var(--inner-card-border);">
+            <p>Thank you for visiting my portfolio!</p>
+        </footer>
+    </div>
+
+    <div class="mobile-nav">
+        <a href="#home" class="active"><i class="fa-solid fa-house"></i></a>
+        <a href="#projects"><i class="fa-solid fa-code"></i></a>
+        <a href="#certificates"><i class="fa-solid fa-certificate"></i></a>
+        <a href="#contact"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+
+    <div class="cert-modal" id="cert-modal" role="dialog" aria-modal="true" aria-labelledby="cert-modal-caption">
+        <div class="cert-modal-inner">
+            <button class="cert-modal-close" id="cert-modal-close" aria-label="Close certificate viewer">×</button>
+            <img id="cert-modal-image" src="" alt="Certificate preview">
+            <div class="cert-modal-caption" id="cert-modal-caption"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <script>
+        // 1. PRELOADER
+        window.addEventListener('load', () => {
+            const preloader = document.querySelector('.preloader');
+            const content = document.querySelector('.reveal-content');
+            setTimeout(() => { preloader.classList.add('slide-up'); setTimeout(() => { content.classList.add('active'); }, 500); }, 2000);
+        });
+
+        // 2. CANVAS GRID
+        const canvas = document.getElementById("canvas-bg");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let mouse = { x: null, y: null, radius: 250 }; 
+        const spacing = 40; const baseRadius = 1.5; const maxScale = 3; 
+        let dots = [];
+        
+        function initGrid() {
+            dots = [];
+            const offsetX = (canvas.width % spacing) / 2;
+            const offsetY = (canvas.height % spacing) / 2;
+            for (let y = offsetY; y < canvas.height; y += spacing) {
+                for (let x = offsetX; x < canvas.width; x += spacing) {
+                    dots.push({ x: x, y: y });
+                }
+            }
+        }
+        
+        window.addEventListener('mousemove', function(event) { mouse.x = event.x; mouse.y = event.y; });
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const isLight = document.body.classList.contains('light-theme');
+
+            for (let i = 0; i < dots.length; i++) {
+                let dot = dots[i];
+                let dx = mouse.x - dot.x;
+                let dy = mouse.y - dot.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                let scale = 1;
+                let intensity = 0;
+                
+                if (distance < mouse.radius) {
+                    intensity = 1 - (distance / mouse.radius);
+                    scale = 1 + (maxScale - 1) * intensity;
+                }
+
+                let r, g, b, a;
+                if (isLight) {
+                    r = g = b = 255;
+                    a = 0.2 + (0.6 * intensity); 
+                } else {
+                    r = g = b = 255; 
+                    a = 0.1 + (0.5 * intensity);
+                }
+
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, baseRadius * scale, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`; 
+                ctx.fill();
+            }
+        }
+        
+        window.addEventListener('resize', function() { canvas.width = innerWidth; canvas.height = innerHeight; initGrid(); });
+        initGrid(); animate();
+
+        // 3. THEME SWITCHER
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-theme');
+            themeSwitch.checked = true;
+        }
+
+        // 4. 3D TILT
+        VanillaTilt.init(document.querySelectorAll(".project-card, .inner-card, .tech-card, .cert-card"), {
+            max: 6,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.15,
+            scale: 1.02
+        });
+
+        // 5. SCROLL SPY FOR MOBILE NAV
+        const sections = document.querySelectorAll("section");
+        const navLi = document.querySelectorAll(".mobile-nav a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current) && current !== "") {
+                    a.classList.add("active");
+                }
+            });
+        });
+
+        const certModal = document.getElementById('cert-modal');
+        const certModalImage = document.getElementById('cert-modal-image');
+        const certModalCaption = document.getElementById('cert-modal-caption');
+        const certModalClose = document.getElementById('cert-modal-close');
+        const certCards = document.querySelectorAll('.cert-card');
+
+        certCards.forEach(card => {
+            card.addEventListener('click', (event) => {
+                event.preventDefault();
+                const imageSrc = card.dataset.image;
+                const title = card.dataset.title || '';
+                if (!imageSrc) return;
+                certModalImage.src = imageSrc;
+                certModalImage.alt = title;
+                certModalCaption.textContent = title;
+                certModal.classList.add('active');
+            });
+        });
+
+        certModalClose.addEventListener('click', () => certModal.classList.remove('active'));
+        certModal.addEventListener('click', (event) => {
+            if (event.target === certModal) {
+                certModal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
